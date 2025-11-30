@@ -1,9 +1,7 @@
-**Identity Fraud Detection at Data Ingestion (Hybrid XGBoost + IsolationForest + SHAP/LIME)**
+**Identity Theft Detection at Data Ingestion Using AI: An Explainable Anomaly Detection Approach (Hybrid XGBoost + IsolationForest + SHAP/LIME)**
 
-This repository contains a complete Python implementation of the hybrid identity theft detection architecture described in the whitepaper:
+This repository contains a complete Python implementation of the hybrid identity theft detection architecture:
 
-Identity Theft Detection at Data Ingestion Using AI: An Explainable Anomaly Detection Approach
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 📌 Overview
 
 This project demonstrates:
