@@ -22,13 +22,13 @@ This project demonstrates:
 
 📁Repository Structure
 
-`identity-fraud-xai/
+identity-fraud-xai/
 ├─ requirements.txt
 ├─ src/
 │  └─ run_pipeline.py
 └─ outputs/
    ├─ plots/
-   └─ explanations/`
+   └─ explanations/
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -89,8 +89,8 @@ Outputs → explanations/
 
 📝 Citation
 If you use this code, please cite:
-`Murthy, S. (2025). Identity Theft Detection at Data Ingestion Using AI:
-An Explainable Anomaly Detection Approach.`
+Murthy, S. (2025). Identity Theft Detection at Data Ingestion Using AI:
+An Explainable Anomaly Detection Approach.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
