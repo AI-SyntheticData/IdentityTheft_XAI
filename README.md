@@ -37,7 +37,7 @@ identity-fraud-xai/
 `pip install -r requirements.txt
 `
 2. Run the pipeline
-`python src/hybrod_xai.py`
+`python src/hybrid_xai.py`
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,8 +64,8 @@ Outputs → explanations/
 **📦 Key Features**
 
 **Hybrid Fraud Detection**
-  * 𝑝 supervised ​ from XGBoost
-  * 𝑠 anomaly ​ from IsolationForest
+  * 𝑝 _supervised_ ​ from XGBoost
+  * 𝑠 _anomaly_ ​ from IsolationForest
   * Combined into a hybrid risk score
 
 **Explainable AI**
@@ -89,12 +89,13 @@ Outputs → explanations/
 
 📝 Citation
 If you use this code, please cite:
+
 **Murthy, S. (2025). Identity Theft Detection at Data Ingestion Using AI:
 An Explainable Anomaly Detection Approach.**
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 📞 Contact
-Author: Sachin Murthy
-Email: sachin.damurthy@gmail.com
-Corresponding Author: Yes
+ Author: Sachin Murthy
+ Email: sachin.damurthy@gmail.com
+ Corresponding Author: Yes
