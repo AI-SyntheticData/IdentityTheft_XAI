@@ -1,0 +1,86 @@
+name: Identity Theft Detection - XAI Pipeline
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  run-detection:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Identity Theft Detection
+      run: |
+        cd src
+        python3 hybrid_xai.py
+
+    - name: List generated files
+      run: |
+        echo "Generated files:"
+        ls -lah outputs/
+        ls -lah outputs/reports/ || true
+        ls -lah outputs/plots/ || true
+        ls -lah outputs/explanations/ || true
+
+    - name: Upload HTML Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: identity-theft-detection-report
+        path: outputs/reports/identity_theft_detection_report.html
+        retention-days: 1
+
+    - name: Upload Plots
+      uses: actions/upload-artifact@v3
+      with:
+        name: detection-plots
+        path: outputs/plots/
+        retention-days: 1
+
+    - name: Upload Explanations
+      uses: actions/upload-artifact@v3
+      with:
+        name: explanation-reports
+        path: outputs/explanations/
+        retention-days: 1
+
+    - name: Upload All Outputs
+      uses: actions/upload-artifact@v3
+      with:
+        name: complete-output-package
+        path: outputs/
+        retention-days: 1
+
+    - name: Generate Job Summary
+      if: always()
+      run: |
+        echo "## Identity Theft Detection Results 🛡️" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Execution Summary" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status**: ✅ Completed" >> $GITHUB_STEP_SUMMARY
+        echo "- **Date**: $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Artifacts Generated" >> $GITHUB_STEP_SUMMARY
+        echo "- 📄 **HTML Report**: identity-theft-detection-report" >> $GITHUB_STEP_SUMMARY
+        echo "- 📊 **Plots**: detection-plots" >> $GITHUB_STEP_SUMMARY
+        echo "- 📋 **Explanations**: explanation-reports" >> $GITHUB_STEP_SUMMARY
+        echo "- 📦 **Complete Package**: complete-output-package" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Download artifacts from the **Actions** tab to view the HTML report and analysis." >> $GITHUB_STEP_SUMMARY
+

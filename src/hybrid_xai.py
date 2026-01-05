@@ -10,6 +10,7 @@ import xgboost as xgb
 import shap
 from lime.lime_tabular import LimeTabularExplainer
 import matplotlib.pyplot as plt
+from html_report_generator import HTMLReportGenerator
 
 # -----------------------------
 # 0. Setup
@@ -335,6 +336,9 @@ def build_explanation_report(
         - decision, label, R_hybrid
         - top SHAP features (by absolute value)
         - rule-based reason codes
+
+    Returns:
+        DataFrame with explanations
     """
     # Filter Review + Suspicious
     mask = test_df["decision"].isin(["Review", "Suspicious"])
@@ -372,7 +376,9 @@ def build_explanation_report(
     expl_df = pd.DataFrame(explanations)
     csv_path = os.path.join(EXPL_DIR, "explanation_report.csv")
     expl_df.to_csv(csv_path, index=False)
-    print(f"Explanation report saved to: {csv_path}")
+    print(f"✓ Explanation report CSV saved: {csv_path}")
+
+    return expl_df
 
 
 # -----------------------------
@@ -418,29 +424,40 @@ def generate_lime_example(xgb_model, X_train, X_test, feature_names):
 # -----------------------------
 
 def main():
-    print("Generating synthetic onboarding identity data...")
+    print("="*80)
+    print("🚀 Identity Theft Detection - Hybrid XAI System")
+    print("="*80)
+
+    print("\n[1/7] Generating synthetic identity theft data...")
     df, feature_names = generate_synthetic_onboarding_data(
         n_samples=10000,
         fraud_ratio=0.06,
     )
+    print(f"✓ Generated {len(df)} records ({df['label'].sum()} fraud cases)")
     print(df.head())
 
-    print("\nTraining models and computing hybrid risk...")
+    print("\n[2/7] Training models and computing hybrid risk scores...")
     xgb_model, iso_model, X_train, X_test, test_df, feature_names = train_models(
         df, feature_names
     )
 
-    print("\nApplying decision logic (Verified / Review / Suspicious)...")
-    test_df = apply_decision_logic(test_df, theta_low=0.4, theta_high=0.8)
+    # Store AUC scores for report
+    auc_supervised = roc_auc_score(test_df["label"], test_df["p_supervised"])
+    auc_hybrid = roc_auc_score(test_df["label"], test_df["R_hybrid"])
 
-    print("\nBuilding SHAP explainer...")
+    print("\n[3/7] Applying decision logic (Verified / Review / Suspicious)...")
+    test_df = apply_decision_logic(test_df, theta_low=0.4, theta_high=0.8)
+    print(f"✓ Decisions: {test_df['decision'].value_counts().to_dict()}")
+
+    print("\n[4/7] Building SHAP explainer...")
     explainer, shap_values_train = build_shap_explainer(xgb_model, X_train)
 
-    print("\nGenerating SHAP plots...")
+    print("\n[5/7] Generating SHAP plots...")
     generate_shap_plots(explainer, shap_values_train, X_train, feature_names)
+    print("✓ SHAP plots saved")
 
-    print("\nBuilding explanation report (SHAP + rules)...")
-    build_explanation_report(
+    print("\n[6/7] Building explanation report (SHAP + rules)...")
+    explanations_df = build_explanation_report(
         test_df,
         feature_names,
         explainer,
@@ -449,10 +466,29 @@ def main():
         theta_low=0.4,
     )
 
-    print("\nGenerating single LIME example...")
-    generate_lime_example(xgb_model, X_train, X_test, feature_names)
+    print("\n[7/7] Generating comprehensive HTML report...")
+    report_gen = HTMLReportGenerator(OUTPUT_DIR)
+    report_path = report_gen.generate_full_report(
+        test_df=test_df,
+        explanations_df=explanations_df,
+        auc_supervised=auc_supervised,
+        auc_hybrid=auc_hybrid,
+        plots_dir=PLOTS_DIR,
+        model_name="Identity Theft Detection"
+    )
 
-    print("\nDone. Check 'outputs/plots' and 'outputs/explanations' folders.")
+    print("\n" + "="*80)
+    print("✅ All tasks completed successfully!")
+    print("="*80)
+    print(f"\n📊 Model Performance:")
+    print(f"   - Supervised AUC: {auc_supervised:.4f}")
+    print(f"   - Hybrid AUC: {auc_hybrid:.4f}")
+    print(f"   - Improvement: {(auc_hybrid - auc_supervised):.4f}")
+    print(f"\n📁 Outputs:")
+    print(f"   - HTML Report: {report_path}")
+    print(f"   - Plots: {PLOTS_DIR}")
+    print(f"   - Explanations: {EXPL_DIR}")
+    print("="*80 + "\n")
 
 
 if __name__ == "__main__":

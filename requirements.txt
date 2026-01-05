@@ -1,7 +1,10 @@
-numpy
-pandas
-scikit-learn
-xgboost
-shap
-lime
-matplotlib
+numpy>=1.21.0
+pandas>=1.3.0
+scikit-learn>=1.0.0
+xgboost>=1.5.0
+shap>=0.50.0
+lime>=0.2.0
+matplotlib>=3.4.0
+flask>=2.0.0
+requests>=2.26.0
+

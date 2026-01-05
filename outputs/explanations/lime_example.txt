@@ -1,9 +1,14 @@
-LIME explanation (feature, contribution):
-doc_auth_score <= 0.84: 0.1485811422251168
-face_match_score <= 0.84: 0.11750905177954328
-liveness_score <= 0.84: 0.1096964332998192
-email_risk_score > 0.24: 0.10681526807607937
-ssn_high_risk_flag <= 0.00: -0.005796766043421566
-vpn_or_tor > 0.00: 0.004076222475719578
-phone_voip_flag <= 0.00: -0.003862308097508777
-device_reuse_count > 2.00: -0.001658788069297517
+LIME Explanation for Highest Risk Case
+==================================================
+
+Predicted fraud probability: 0.9980
+
+Feature contributions:
+  liveness_score <= 0.84: +0.1573
+  doc_auth_score <= 0.84: +0.1280
+  face_match_score <= 0.84: +0.1107
+  email_risk_score > 0.24: +0.0897
+  ssn_high_risk_flag <= 0.00: +0.0065
+  vpn_or_tor <= 0.00: -0.0040
+  device_reuse_count > 2.00: -0.0037
+  phone_voip_flag <= 0.00: +0.0007

@@ -37089,25 +37089,25 @@
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divW4KXOX8VV2QUVPI"></div>
+        <div class="lime top_div" id="top_divFHF2FJOV8CVJ2N3"></div>
         
         <script>
-        var top_div = d3.select('#top_divW4KXOX8VV2QUVPI').classed('lime top_div', true);
+        var top_div = d3.select('#top_divFHF2FJOV8CVJ2N3').classed('lime top_div', true);
         
             var pp_div = top_div.append('div')
                                 .classed('lime predict_proba', true);
             var pp_svg = pp_div.append('svg').style('width', '100%');
-            var pp = new lime.PredictProba(pp_svg, ["legit", "fraud"], [0.0019907355308532715, 0.9980092644691467]);
+            var pp = new lime.PredictProba(pp_svg, ["legit", "fraud"], [0.001956939697265625, 0.9980430603027344]);
             
         
         var exp_div;
             var exp = new lime.Explanation(["legit", "fraud"]);
         
                 exp_div = top_div.append('div').classed('lime explanation', true);
-                exp.show([["doc_auth_score <= 0.84", 0.1485811422251168], ["face_match_score <= 0.84", 0.11750905177954328], ["liveness_score <= 0.84", 0.1096964332998192], ["email_risk_score > 0.24", 0.10681526807607937], ["ssn_high_risk_flag <= 0.00", -0.005796766043421566], ["vpn_or_tor > 0.00", 0.004076222475719578], ["phone_voip_flag <= 0.00", -0.003862308097508777], ["device_reuse_count > 2.00", -0.001658788069297517]], 1, exp_div);
+                exp.show([["liveness_score <= 0.84", 0.1573310000715079], ["doc_auth_score <= 0.84", 0.12802470772871508], ["face_match_score <= 0.84", 0.11072790003602213], ["email_risk_score > 0.24", 0.08973622600865769], ["ssn_high_risk_flag <= 0.00", 0.006531332750354137], ["vpn_or_tor <= 0.00", -0.0040072315170527305], ["device_reuse_count > 2.00", -0.0036714026686134704], ["phone_voip_flag <= 0.00", 0.0006883658591213085]], 1, exp_div);
                 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["doc_auth_score", "0.39", 0.1485811422251168], ["face_match_score", "0.64", 0.11750905177954328], ["liveness_score", "0.41", 0.1096964332998192], ["email_risk_score", "0.84", 0.10681526807607937], ["ssn_high_risk_flag", "0.00", -0.005796766043421566], ["vpn_or_tor", "1.00", 0.004076222475719578], ["phone_voip_flag", "0.00", -0.003862308097508777], ["device_reuse_count", "4.00", -0.001658788069297517]], 1, raw_div);
+            exp.show_raw_tabular([["liveness_score", "0.72", 0.1573310000715079], ["doc_auth_score", "0.21", 0.12802470772871508], ["face_match_score", "0.77", 0.11072790003602213], ["email_risk_score", "0.46", 0.08973622600865769], ["ssn_high_risk_flag", "0.00", 0.006531332750354137], ["vpn_or_tor", "0.00", -0.0040072315170527305], ["device_reuse_count", "3.00", -0.0036714026686134704], ["phone_voip_flag", "0.00", 0.0006883658591213085]], 1, raw_div);
         
         </script>
         </body></html>
