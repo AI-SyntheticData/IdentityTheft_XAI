@@ -40,28 +40,28 @@ jobs:
         ls -lah outputs/explanations/ || true
 
     - name: Upload HTML Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: identity-theft-detection-report
         path: outputs/reports/identity_theft_detection_report.html
         retention-days: 1
 
     - name: Upload Plots
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: detection-plots
         path: outputs/plots/
         retention-days: 1
 
     - name: Upload Explanations
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: explanation-reports
         path: outputs/explanations/
         retention-days: 1
 
     - name: Upload All Outputs
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: complete-output-package
         path: outputs/
