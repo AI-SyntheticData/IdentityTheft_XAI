@@ -316,7 +316,13 @@ Run the complete test suite:
 
 ```bash
 # Test inference examples
-python src/demo_inference.py
+python3 src/demo_inference.py
+
+# Start the API server
+python3 src/api_server.py
+
+# Trigger the API endpoints
+python3 src/test_api.py
 ```
 
 ---
